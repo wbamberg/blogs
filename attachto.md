@@ -1,6 +1,6 @@
-We're pleased to announce a new feature for `page-mod` module, that will be introduced in Add-on SDK 1.11: The `attachTo` PageMod's option!
+We're pleased to announce a new feature for the `page-mod` module that's coming in Add-on SDK 1.11: the `attachTo` option!
 
-If you're interested in trying this feature out now, you can do so by checking out the `master` branch of the addon-sdk repository:
+If you're interested in trying this feature out now, check out the `master` branch of the addon-sdk repository:
 
 git clone git://github.com/mozilla/addon-sdk.git
 
@@ -10,19 +10,17 @@ https://github.com/mozilla/addon-sdk/zipball/master
 
 # What PageMod does
 
-As the Add-on SDK documentation says, with PageMod you can dynamically modify the content of certain pages: the add-on developer supplies a set of rules to select the desired subset of web pages *based on their URL.*
+With PageMod you can dynamically modify the content of certain pages: the add-on developer supplies a set of rules to select the desired subset of web pages based on their URL.
 
-Here the first important thing: a PageMod affects *any* document where the URL matches the rules supplied. Any. So, if your rule matches a specific hostname and path for example, and the topmost document that satisfy the rule has ten iframes inside, with relative URL, then your PageMod is applied eleven times. And probably that's not what you expected.
+Here the first important thing: a PageMod affects *any* document whose URL matches the rules supplied. Any. So if your rule matches a specific hostname and path, and the topmost document that satisfies the rule includes ten iframes using a relative URL, then your PageMod is applied eleven times. And probably that's not what you expected.
 
-But that's not all: *"A page mod does not modify its pages until those pages are loaded or reloaded. In other words, if your add-on is loaded while the user's browser is open, the user will have to reload any open pages that match the mod for the mod to affect them."*
+But that's not all: [*"A page mod does not modify its pages until those pages are loaded or reloaded. In other words, if your add-on is loaded while the user's browser is open, the user will have to reload any open pages that match the mod for the mod to affect them"*](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/page-mod.html). That's annoying, isn't it? 
 
-That's annoying, isn't it? 
+# Workarounds
 
-# How to solve?
+## Excluding frames
 
-## Top and frames documents
-
-Prior the Add-on SDK 1.11, the only way to applying the PageMod only on topmost document was… not using PageMod. Basically use `tabs` module to attach a content script in the desired subset of pages, simulating partially – and manually – what PageMod does:
+Before the `attachTo` option, the only way to attach a PageMod to only the topmost document was… to not use PageMod. Instead, use the `tabs` module to attach a content script to the desired subset of pages, simulating partially – and manually – what PageMod does:
 
     var { MatchPattern } = require("match-pattern");
     var tabs = require("tabs");
@@ -35,7 +33,9 @@ Prior the Add-on SDK 1.11, the only way to applying the PageMod only on topmost 
         tab.attach({contentScriptFile: script});
     });
 
-Unfortunately, beside the boilerplate code, there are some downside: `tabs` doesn't support `contentStyle*`, and if you want actually to target the frames instead of the topmost document, you can't. You can still use PageMod, and in the content script have a check like the follow:
+Unfortunately, beside the boilerplate code, there are some downsides: `tabs` doesn't support `contentStyle*`, and if you want  to target the frames instead of the topmost document, you can't.
+
+Alternatively, you can still use PageMod, and in the content script have a check like this:
 
     if (window.frameElement) {
       // loaded in a frame
@@ -43,11 +43,11 @@ Unfortunately, beside the boilerplate code, there are some downside: `tabs` does
       // loaded in the topmost document
     }
 
-But it means that the PageMod has to be attached and executed to every documents, and for memory consumption that is not suggested.
+But this means that the PageMod has to be attached to and executed in every document, which can have a bad effect on memory consumption.
 
-## Existing documents
+## Attaching to existing documents
 
-To applying the PageMod on existing documents, you have a similar approach. This time using both `PageMod` and `tabs` module together:
+To attach the PageMod to existing documents, you can have a similar approach, this time using both `PageMod` and `tabs` together:
 
     var { MatchPattern } = require("match-pattern");
     var { PageMod } = require("page-mod");
@@ -68,11 +68,11 @@ To applying the PageMod on existing documents, you have a similar approach. This
       if (pattern.test(tabs[i].url))
         tabs[i].attach({contentScriptFile: script});
 
-However, as we already saw, a content script attached in that way is not exactly equivalent to the PageMod's one. For instance, the content script will be attach only to the tab's document, ignoring any frames' document that could match the same `include` pattern.
+However, as we already saw, a content script attached in that way is not exactly equivalent to the PageMod's one: you can't use `contentStyle*, and the content script will be attached only to the tab's document, ignoring any iframes that match the `include` pattern.
 
 # attachTo FTW!
 
-The `attachTo` option is introduced to give to the developer more flexibility about their PageMods. With `attachTo`, if you want to applying your PageMod only on topmost document, you can simply have:
+With `attachTo`, if you want to attach your PageMod only to the topmost document, you can simply have:
 
     var { PageMod } = require("page-mod");
     var script = require("self").data.url("content.js");
@@ -83,7 +83,7 @@ The `attachTo` option is introduced to give to the developer more flexibility ab
       attachTo: ["top"]
     });
 
-Likewise, if you want to attach your PageMod on all documents – topmost, frames, and even existing ones - you will have:
+Likewise, if you want to attach your PageMod to all documents – topmost, frames, and existing ones - you will have:
 
     var { PageMod } = require("page-mod");
     var script = require("self").data.url("content.js");
@@ -94,11 +94,9 @@ Likewise, if you want to attach your PageMod on all documents – topmost, frame
     attachTo: ["top", "frames", "existing"]
     });
 
-???
+# But wait, there's more!
 
-# But wait, there is more!
-
-As you saw `attachTo` accepts an array of strings, with three possible values: `"existing"`, `"top"` and `"frames"`. And you can combine them, to open a whole new set of behaviors for PageMods. Here a comprehensive list:
+As you saw, `attachTo` accepts an array of strings with three possible values: `"existing"`, `"top"`, and `"frames"`. You can combine them, to open a whole new set of behaviors for PageMods. Here's a comprehensive list:
 
 	// Applied to: new top documents
 	// Not applied to: frames' documents; existing documents
@@ -124,19 +122,19 @@ As you saw `attachTo` accepts an array of strings, with three possible values: `
 	// Applied to: all documents
 	attachTo: ["top", "frames", "existing"]
 
-As you probably noticed, `"existing"` alone is not listed. That's because `attachTo`, when specified, requires at least one value as documents' target (`"top"`, `"frames"`).
+As you probably noticed, `"existing"` alone is not listed. That's because `attachTo`, when specified, requires at least one value to determine the documents' target (`"top"`, `"frames"`).
 
 # A touch of style
 
-The current implementation of `contentStyle*` is independent from the `contentScript*` and therefore `attachTo`. Because the style is registered as global stylesheet, it will always applied to all documents despite what the `attachTo` specify. We're working on address those differences. If you are interested, you can have a look at our [contentStyle issues](https://github.com/mozilla/addon-sdk/wiki/contentStyle-issues) wiki page.
+The current implementation of `contentStyle*` is independent from the `contentScript*` and therefore `attachTo`. Because the style is registered as a global stylesheet, it will always be applied to all documents, whatever `attachTo` specifies. We're working on addressing this difference. If you are interested, you can have a look at our [contentStyle issues](https://github.com/mozilla/addon-sdk/wiki/contentStyle-issues) wiki page.
 
-# Conclusion
+# Cleaning up
 
-I personally believe that this feature is a great step forward for PageMods. But "with great power comes great responsibility": a PageMod that can be attached to existing documents means that you could have a scenario where is attached twice: An user could install your add-on, disabled it and re-enable it.
+I personally believe that this feature is a great step forward for PageMods. But "with great power comes great responsibility": a PageMod that can be attached to existing documents means that you could have a scenario where it is attached twice: a user could install your add-on, disable it and then re-enable it.
 
-So, play safe! If you add some DOM elements to a page, just check they're not already there, or clean up what you have done when your PageMod is destroyed.
+So play safe! If you add some DOM elements to a page, check they're not already there, or clean up what you have done when your PageMod is destroyed.
 
-But don't be worried and stay tuned! In one of my next posts I will talk about how to clean up your PageMod's changes nicely.
+If this sounds complicated, don't worry! In my next post I'll describe how to clean up your PageMod's changes nicely.
 
 # Bugs Reference
 
