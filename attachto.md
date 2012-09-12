@@ -22,9 +22,10 @@ But this means that the PageMod has to be attached to and executed in every docu
 
 To attach the PageMod to existing documents, you can have a similar approach, this time using both `PageMod` and `tabs` together. You basically create your regular `PageMod`, and iterating the tabs already opened with `tabs` module to attach the same content script, if the document's URL satisfies the rule specified.
 
-However, as we already saw, a content script attached in that way is not exactly equivalent to the PageMod's one: you can't use `contentStyle*, and the content script will be attached only to the tab's document, ignoring any sub frames.
+However, as we already saw, a content script attached in that way is not exactly equivalent to the PageMod's one: you can't use `contentStyle*`, and the content script will be attached only to the tab's document, ignoring any sub frames.
 
 # attachTo FTW!
+
 This new option addresses all these issues.
 With `attachTo`, if you want to attach your PageMod only to the topmost document, you can simply have:
 
@@ -90,7 +91,7 @@ So play safe! If you add some DOM elements to a page, check they're not already 
 
 If this sounds complicated, don't worry! In my next post I'll describe how to clean up your PageMod's changes nicely.
 
-# Conclusion
+# Try it out
 
 If you're interested in trying this feature out now, check out the `master` branch of the addon-sdk repository:
 
