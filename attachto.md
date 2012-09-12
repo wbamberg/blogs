@@ -1,13 +1,5 @@
 We're pleased to announce a new feature for the `page-mod` module that's coming in Add-on SDK 1.11: the `attachTo` option!
 
-If you're interested in trying this feature out now, check out the `master` branch of the addon-sdk repository:
-
-git clone git://github.com/mozilla/addon-sdk.git
-
-Or download the current master's zip archive:
-
-https://github.com/mozilla/addon-sdk/zipball/master
-
 # What PageMod does
 
 With PageMod you can dynamically modify the content of certain pages: the add-on developer supplies a set of rules to select the desired subset of web pages based on their URL.
@@ -20,58 +12,20 @@ But that's not all: [*"A page mod does not modify its pages until those pages ar
 
 ## Excluding frames
 
-Before the `attachTo` option, the only way to attach a PageMod to only the topmost document was… to not use PageMod. Instead, use the `tabs` module to attach a content script to the desired subset of pages, simulating partially – and manually – what PageMod does:
-
-    var { MatchPattern } = require("match-pattern");
-    var tabs = require("tabs");
-
-    var script = require("self").data.url("content.js");
-    var pattern = new MatchPattern("*");
-
-    tabs.on("ready", function onReady(tab) {
-      if (pattern.test(tab.url))
-        tab.attach({contentScriptFile: script});
-    });
-
+Before the `attachTo` option, the only way to attach a PageMod to only the topmost document was… to not use PageMod. Instead, use the `tabs` module to attach a content script to the desired subset of pages, simulating partially – and manually – what PageMod does.
 Unfortunately, beside the boilerplate code, there are some downsides: `tabs` doesn't support `contentStyle*`, and if you want  to target the frames instead of the topmost document, you can't.
 
-Alternatively, you can still use PageMod, and in the content script have a check like this:
-
-    if (window.frameElement) {
-      // loaded in a frame
-    } else {
-      // loaded in the topmost document
-    }
-
+Alternatively, you can still use PageMod, and in the content script have a check to figure out if the document is loaded in a frame or not, like testing [window.frameElement](https://developer.mozilla.org/en-US/docs/DOM/window.frameElement) for example.
 But this means that the PageMod has to be attached to and executed in every document, which can have a bad effect on memory consumption.
 
 ## Attaching to existing documents
 
-To attach the PageMod to existing documents, you can have a similar approach, this time using both `PageMod` and `tabs` together:
+To attach the PageMod to existing documents, you can have a similar approach, this time using both `PageMod` and `tabs` together. You basically create your regular `PageMod`, and iterating the tabs already opened with `tabs` module to attach the same content script, if the document's URL satisfies the rule specified.
 
-    var { MatchPattern } = require("match-pattern");
-    var { PageMod } = require("page-mod");
-    var tabs = require("tabs");
-
-    var script = require("self").data.url("content.js");
-    var pattern = new MatchPattern("*");
-
-    // PageMod will affects any new documents
-    PageMod({
-      include: "*",
-      contentScriptFile: script
-    });
-
-    // So, we're using `tabs` module to applying the content
-    // script to existing documents.
-    for (var i = 0; i < tabs.length; i++)
-      if (pattern.test(tabs[i].url))
-        tabs[i].attach({contentScriptFile: script});
-
-However, as we already saw, a content script attached in that way is not exactly equivalent to the PageMod's one: you can't use `contentStyle*, and the content script will be attached only to the tab's document, ignoring any iframes that match the `include` pattern.
+However, as we already saw, a content script attached in that way is not exactly equivalent to the PageMod's one: you can't use `contentStyle*, and the content script will be attached only to the tab's document, ignoring any sub frames.
 
 # attachTo FTW!
-
+This new option addresses all these issues.
 With `attachTo`, if you want to attach your PageMod only to the topmost document, you can simply have:
 
     var { PageMod } = require("page-mod");
@@ -124,7 +78,7 @@ As you saw, `attachTo` accepts an array of strings with three possible values: `
 
 As you probably noticed, `"existing"` alone is not listed. That's because `attachTo`, when specified, requires at least one value to determine the documents' target (`"top"`, `"frames"`).
 
-# A touch of style
+# Style-challenged
 
 The current implementation of `contentStyle*` is independent from the `contentScript*` and therefore `attachTo`. Because the style is registered as a global stylesheet, it will always be applied to all documents, whatever `attachTo` specifies. We're working on addressing this difference. If you are interested, you can have a look at our [contentStyle issues](https://github.com/mozilla/addon-sdk/wiki/contentStyle-issues) wiki page.
 
@@ -135,6 +89,16 @@ I personally believe that this feature is a great step forward for PageMods. But
 So play safe! If you add some DOM elements to a page, check they're not already there, or clean up what you have done when your PageMod is destroyed.
 
 If this sounds complicated, don't worry! In my next post I'll describe how to clean up your PageMod's changes nicely.
+
+# Conclusion
+
+If you're interested in trying this feature out now, check out the `master` branch of the addon-sdk repository:
+
+git clone git://github.com/mozilla/addon-sdk.git
+
+Or download the current master's zip archive:
+
+https://github.com/mozilla/addon-sdk/zipball/master
 
 # Bugs Reference
 
