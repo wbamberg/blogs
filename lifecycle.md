@@ -4,9 +4,11 @@ Defining a lifecycle for the SDK's APIs
 The Jetpack team met up a few weeks ago, and one of the things we talked
 about was a process for defining and communicating the stability of our
 APIs, and for deprecating and eventually removing APIs that don't work as
-well as we'd like. It's important for developers to know which APIs they
+well as we'd like.
+
+It's important for developers to know which APIs they
 can rely on, and exactly what compatibility promises the SDK makes about
-a given API. On the other side, it's important that the core team can
+a given API. On the other hand, it's important that the core team can
 continue to improve the SDK, and sometimes this will mean removing or
 making incompatible changes to its APIs.
 
