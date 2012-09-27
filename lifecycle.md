@@ -15,12 +15,11 @@ SDK's internals, and as a result several modules in api-utils
 are effectively obsolete and should no longer be used.
 
 Without a process for promoting modules from
-"experimental" status to "supported" status, for deprecating APIs,
+"experimental" to "supported", for deprecating APIs,
 or for removing deprecated APIs, things tend to stagnate:
 
-* new modules stay "experimental" for
-longer than they should, meaning developers can't rely on them not
-to change unexpectedly
+* new modules stay "experimental" for longer than they should,
+meaning developers can't rely on them not to change unexpectedly
 
 * developers can't distinguish between new and obsolete APIs
 (should we use
