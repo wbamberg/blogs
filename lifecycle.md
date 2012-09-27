@@ -62,38 +62,34 @@ The stability index for each module is written into that module's `metadata` str
 * [`addon-page` is `experimental`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/simple-prefs.js#L7)
 
 In future releases, the SDK's documentation system will read these values
-and expose them: in fact, the SDK will eventually remove the "package"
-structure entirely, and then `cfx docs` will organize modules according
-to their stability rather than by package.
+and expose them: in fact, the [SDK will eventually remove the "package"
+structure entirely](https://github.com/mozilla/addon-sdk/wiki/JEP-packageless),
+and then `cfx docs` will organize modules according to their stability rather
+than by package.
 
+We'll periodically review APIs that are marked as "experimental" or "unstable"
+and, if possible, raise bugs to promote them to a more stable state.
 
+Right now, we've raised bugs to stabilize some `experimental` APIs in `addon-kit`:
+* [the `addon-page` module](https://bugzilla.mozilla.org/show_bug.cgi?id=790320)
+* [the `simple-prefs` module](https://bugzilla.mozilla.org/show_bug.cgi?id=790323)
+* [page script access to messaging](https://bugzilla.mozilla.org/show_bug.cgi?id=790328).
 
+## Deprecation Process ##
 
+We've drafted a deprecation process on the
+[Jetpack Wiki](https://wiki.mozilla.org/Jetpack/Module_Deprecation_Process).
+To remove or change any `stable` API, we'll follow this process:
 
+* develop and document alternatives for any APIs we wish to deprecate
+* communicate the deprecation, and support developers in migrating
+to the alternative
+* start issuing warnings for code that uses deprecated APIs
+* keep deprecated APIs for at least three releases (18 weeks)
+after deprecation, and longer if they are still seeing enough use.
 
+Once the process is ready to go, we'll [deprecate a number of obsolete
+modules in `api-utils`](https://bugzilla.mozilla.org/show_bug.cgi?id=787075).
 
-
-
-
-
-
-
-
-* what we have now
-- problems
-  - promises aren't clear
-  - can't remove deprecated modules/functions
-  - hard to communicate individual differences
-  - packagelessness breaks it all!
-- examples
-- packageless future
-
-* where we're going?
-- module stability definition from nodejs
-- stored in module metadata
-- will (somehow) be exposed in module's documentation
-- deprecation process for modules: here
-- modules we're planning to deprecate
-
-* still a work in progress
+## What's Next? ##
 
