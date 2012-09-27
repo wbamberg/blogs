@@ -21,12 +21,10 @@ or for removing deprecated APIs, things tend to stagnate:
 
 * new modules stay "experimental" for longer than they should,
 meaning developers can't rely on them not to change unexpectedly
-
 * developers can't distinguish between new and obsolete APIs
 (should we use
 [`window-utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window-utils.html)
 or [`window/utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window/utils.html))?
-
 * deprecated APIs hang around indefinitely, increasing the
 support burden and making the SDK more confusing to use
 
