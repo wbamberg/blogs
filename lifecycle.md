@@ -16,7 +16,7 @@ are effectively obsolete and should no longer be used.
 
 Without a process for promoting modules from
 "experimental" status to "supported" status, for deprecating APIs,
-or for removing deprecated APIs, things tend to stagnate.
+or for removing deprecated APIs, things tend to stagnate:
 
 * new modules stay "experimental" for
 longer than they should, meaning developers can't rely on them not
@@ -29,10 +29,6 @@ or [`window/utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/
 
 * deprecated APIs hang around indefinitely, increasing the
 support burden and making the SDK more confusing to use
-
-Even worse, without a clear statement of the compatibility promises that the
-SDK makes to developers, it's difficult for developers even to use "supported"
-APIs with confidence.
 
 So when the Jetpack team met up a few weeks ago one of the things
 we talked about was a process for defining and communicating the stability
@@ -62,8 +58,8 @@ The stability index for each module is written into that module's metadata struc
 * [`page-mod` is `stable`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/page-mod.js#L9)
 * [`addon-page` is `experimental`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/simple-prefs.js#L7)
 
-In future releases, the SDK's documentation system will read these values
-and expose them: in fact, the [SDK will eventually remove the "package"
+In future releases, the SDK will read these values
+and expose them in the docs: in fact, the [SDK will eventually remove the "package"
 structure entirely](https://github.com/mozilla/addon-sdk/wiki/JEP-packageless),
 and then `cfx docs` will organize modules according to their stability rather
 than by package.
@@ -80,7 +76,7 @@ Right now, we've raised bugs to stabilize some "experimental" APIs in addon-kit:
 
 We've drafted a deprecation process on the
 [Jetpack Wiki](https://wiki.mozilla.org/Jetpack/Module_Deprecation_Process).
-To remove or change any "stable" API, we'll:
+In summary, to remove or change any "stable" API, we'll:
 
 * develop and document alternatives for any APIs we wish to deprecate
 * communicate the deprecation, and support developers in migrating
