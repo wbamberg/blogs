@@ -7,9 +7,10 @@ necessary", while APIs in the lower-level [api-utils package](https://addons.moz
 are "not fully stabilized", meaning that we expect to make incompatible
 changes to them.
 
-But [some newer modules in addon-kit have been marked as
-"experimental"](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/simple-prefs.html),
-while we have deprecated a few APIs in addon-kit, such as the global `postMessage()` and `on()` functions in
+There are some exceptions to this broad rule: some newer modules in addon-kit,
+like [`simple-prefs`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/simple-prefs.html),
+have been marked as "experimental", and we've deprecated a few APIs in addon-kit,
+such as the global `postMessage()` and `on()` functions in
 content scripts. More recently we've landed a lot of changes to the
 SDK's internals, and as a result several modules in api-utils
 are effectively obsolete and should no longer be used.
@@ -91,7 +92,7 @@ modules in api-utils](https://bugzilla.mozilla.org/show_bug.cgi?id=787075).
 ## What's Next? ##
 
 This process is itself still in the "experimental" state! If you have any
-feedback about how we can make it better, we'd love to hear from you by
+feedback about how we can make it better, we'd love to hear from you in
 comments to this post or via any of the usual channels:
 
 * [the Jetpack discussion group/mailing list](http://groups.google.com/group/mozilla-labs-jetpack)
