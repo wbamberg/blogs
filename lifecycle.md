@@ -2,9 +2,9 @@
 
 Until now, we've not had a very well-defined lifecycle for APIs in the Add-on SDK.
 We've said, broadly, that APIs in the [addon-kit package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/index.html)
-are "supported", meaning we will not change them "unless absolutely
+are "supported", meaning we won't change them "unless absolutely
 necessary", while APIs in the lower-level [api-utils package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/index.html)
-are "not fully stabilized", meaning that we do expect to make incompatible
+are "not fully stabilized", meaning that we expect to make incompatible
 changes to them.
 
 But [some newer modules in addon-kit have been marked as
