@@ -1,6 +1,6 @@
-# Defining a lifecycle for the SDK's APIs #
+# Defining a lifecycle for the Add-on SDK's APIs #
 
-Until now, we've not had a very well-defined API lifecycle.
+Until now, we've not had a very well-defined lifecycle for APIs in the Add-on SDK.
 We've said, broadly, that APIs in the [`addon-kit` package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/index.html)
 are "supported", meaning we will not change them "unless absolutely
 necessary", while APIs in the lower-level [api-utils package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/index.html)
