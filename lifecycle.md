@@ -93,3 +93,9 @@ modules in `api-utils`](https://bugzilla.mozilla.org/show_bug.cgi?id=787075).
 
 ## What's Next? ##
 
+This process is itself still in the `experimental` state! If you have any
+feedback about how we can make it better, we'd love to hear from you by
+comments to this post or via any of the usual channels:
+
+* [the Jetpack discussion group/mailing list](http://groups.google.com/group/mozilla-labs-jetpack)
+* [the #jetpack IRC channel](http://mibbit.com/?channel=%23jetpack&server=irc.mozilla.org)
