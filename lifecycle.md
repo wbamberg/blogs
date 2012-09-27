@@ -11,7 +11,7 @@ But [some newer modules in addon-kit have been marked as
 "experimental"](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/simple-prefs.html),
 while we have deprecated a few APIs in addon-kit, such as the global `postMessage()` and `on()` functions in
 content scripts. More recently we've landed a lot of changes to the
-SDK's internals. As a result several modules in api-utils
+SDK's internals, and as a result several modules in api-utils
 are effectively obsolete and should no longer be used.
 
 Without a process for promoting modules from
