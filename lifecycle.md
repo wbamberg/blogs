@@ -1,17 +1,17 @@
 # Defining a lifecycle for the Add-on SDK's APIs #
 
 Until now, we've not had a very well-defined lifecycle for APIs in the Add-on SDK.
-We've said, broadly, that APIs in the [`addon-kit` package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/index.html)
+We've said, broadly, that APIs in the [addon-kit package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/index.html)
 are "supported", meaning we will not change them "unless absolutely
 necessary", while APIs in the lower-level [api-utils package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/index.html)
-are not fully stabilized, meaning that we do expect to make incompatible
+are "not fully stabilized", meaning that we do expect to make incompatible
 changes to them.
 
-But [some newer modules in `addon-kit` have been marked as
+But [some newer modules in addon-kit have been marked as
 "experimental"](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/simple-prefs.html),
-while we have deprecated a few APIs in `addon-kit`, such as the global `postMessage()` and `on()` functions in
+while we have deprecated a few APIs in addon-kit, such as the global `postMessage()` and `on()` functions in
 content scripts. More recently we've landed a lot of changes to the
-SDK's internals. As a result several modules in `api-utils`
+SDK's internals. As a result several modules in api-utils
 are effectively obsolete and should no longer be used.
 
 Without a process for promoting modules from
