@@ -35,7 +35,6 @@ of our APIs, and for deprecating and eventually removing obsolete APIs.
 The lifecycle we've drafted has two main components:
 
 * a "stability index", that defines how stable each module is
-
 * a deprecation process that's intended to enable the SDK to remove
 or change APIs when necessary, while giving developers enough time
 to update their code.
