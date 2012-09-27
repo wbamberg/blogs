@@ -46,12 +46,13 @@ to update their code.
 The stability index is adopted from [node.js](http://nodejs.org/api/documentation.html).
 Each module is assigned one of six values:
 
-1. *Deprecated*: This feature is known to be problematic, and changes are planned. Do not rely on it. Use of the feature may cause warnings. Backwards compatibility should not be expected.
-2. *Experimental*: This feature was introduced recently, and may change or be removed in future versions. Please try it out and provide feedback. If it addresses a use-case that is important to you, tell the node core team.
-3. *Unstable*: The API is in the process of settling, but has not yet had sufficient real-world testing to be considered stable. Backwards-compatibility will be maintained if reasonable.
-4. *Stable*: The API has proven satisfactory, but cleanup in the underlying code may cause minor changes. Backwards-compatibility is guaranteed.
-5. *API Frozen*: This API has been tested extensively in production and is unlikely to ever have to change.
-6. *Locked*: Unless serious bugs are found, this code will not ever change. Please do not suggest changes in this area; they will be refused.
+
+1. **Deprecated:** *This feature is known to be problematic, and changes are planned. Do not rely on it. Use of the feature may cause warnings. Backwards compatibility should not be expected.*
+2. **Experimental:** *This feature was introduced recently, and may change or be removed in future versions. Please try it out and provide feedback. If it addresses a use-case that is important to you, tell the node core team.*
+3. **Unstable:** *The API is in the process of settling, but has not yet had sufficient real-world testing to be considered stable. Backwards-compatibility will be maintained if reasonable.*
+4. **Stable:** *The API has proven satisfactory, but cleanup in the underlying code may cause minor changes. Backwards-compatibility is guaranteed.*
+5. **API Frozen:** *This API has been tested extensively in production and is unlikely to ever have to change.*
+6. **Locked:** *Unless serious bugs are found, this code will not ever change. Please do not suggest changes in this area; they will be refused.*
 
 The stability index for each module is written into that module's metadata structure:
 * [`page-mod` is `stable`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/page-mod.js#L9)
