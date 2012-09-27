@@ -22,7 +22,7 @@ or for removing deprecated APIs, things tend to stagnate.
 longer than they should, meaning developers can't use them with confidence
 
 * developers can't distinguish between new and obsoleted APIs
-(should they be using [`window-utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window-utils.html),
+(should we use [`window-utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window-utils.html),
 or [`window/utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window/utils.html))?
 
 * deprecated APIs hang around indefinitely, increasing the
