@@ -22,7 +22,8 @@ or for removing deprecated APIs, things tend to stagnate.
 longer than they should, meaning developers can't use them with confidence
 
 * developers can't distinguish between new and obsoleted APIs
-(should we use [`window-utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window-utils.html),
+(should we use
+[`window-utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window-utils.html)
 or [`window/utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/window/utils.html))?
 
 * deprecated APIs hang around indefinitely, increasing the
@@ -31,7 +32,7 @@ support burden and making the SDK more confusing to use
 Without a clear statement of the compatibility promises that the
 SDK makes to developers, it's difficult to use any APIs with confidence.
 
-So when the Jetpack team met up a few weeks ago, and one of the things
+So when the Jetpack team met up a few weeks ago one of the things
 we talked about was a process for defining and communicating the stability
 of our APIs, and for deprecating and eventually removing obsolete APIs.
 
@@ -55,7 +56,7 @@ Each module is assigned one of six values:
 5. *API Frozen*: This API has been tested extensively in production and is unlikely to ever have to change.
 6. *Locked*: Unless serious bugs are found, this code will not ever change. Please do not suggest changes in this area; they will be refused.
 
-The stability index for each module is written into that module's `metadata` structure:
+The stability index for each module is written into that module's metadata structure:
 * [`page-mod` is `stable`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/page-mod.js#L9)
 * [`addon-page` is `experimental`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/simple-prefs.js#L7)
 
@@ -68,7 +69,7 @@ than by package.
 We'll periodically review APIs that are marked as "experimental" or "unstable"
 and, if possible, raise bugs to promote them to a more stable state.
 
-Right now, we've raised bugs to stabilize some `experimental` APIs in `addon-kit`:
+Right now, we've raised bugs to stabilize some "experimental" APIs in addon-kit:
 * [the `addon-page` module](https://bugzilla.mozilla.org/show_bug.cgi?id=790320)
 * [the `simple-prefs` module](https://bugzilla.mozilla.org/show_bug.cgi?id=790323)
 * [page script access to messaging](https://bugzilla.mozilla.org/show_bug.cgi?id=790328).
@@ -77,7 +78,7 @@ Right now, we've raised bugs to stabilize some `experimental` APIs in `addon-kit
 
 We've drafted a deprecation process on the
 [Jetpack Wiki](https://wiki.mozilla.org/Jetpack/Module_Deprecation_Process).
-To remove or change any `stable` API, we'll follow this process:
+To remove or change any "stable" API, we'll:
 
 * develop and document alternatives for any APIs we wish to deprecate
 * communicate the deprecation, and support developers in migrating
@@ -87,11 +88,11 @@ to the alternative
 after deprecation, and longer if they are still seeing enough use.
 
 Once the process is ready to go, we'll [deprecate a number of obsolete
-modules in `api-utils`](https://bugzilla.mozilla.org/show_bug.cgi?id=787075).
+modules in api-utils](https://bugzilla.mozilla.org/show_bug.cgi?id=787075).
 
 ## What's Next? ##
 
-This process is itself still in the `experimental` state! If you have any
+This process is itself still in the "experimental" state! If you have any
 feedback about how we can make it better, we'd love to hear from you by
 comments to this post or via any of the usual channels:
 
