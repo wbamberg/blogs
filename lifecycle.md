@@ -19,7 +19,8 @@ Without a process for promoting modules from
 or for removing deprecated APIs, things tend to stagnate.
 
 * new modules stay "experimental" for
-longer than they should, meaning developers can't use them with confidence
+longer than they should, meaning developers can't rely on them not
+to change unexpectedly
 
 * developers can't distinguish between new and obsoleted APIs
 (should we use
@@ -29,8 +30,8 @@ or [`window/utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/
 * deprecated APIs hang around indefinitely, increasing the
 support burden and making the SDK more confusing to use
 
-Without a clear statement of the compatibility promises that the
-SDK makes to developers, it's difficult for developers to use any
+Even worse, without a clear statement of the compatibility promises that the
+SDK makes to developers, it's difficult for developers even to use "stable"
 APIs with confidence.
 
 So when the Jetpack team met up a few weeks ago one of the things
