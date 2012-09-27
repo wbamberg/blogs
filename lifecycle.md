@@ -31,7 +31,7 @@ or [`window/utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/
 support burden and making the SDK more confusing to use
 
 Even worse, without a clear statement of the compatibility promises that the
-SDK makes to developers, it's difficult for developers even to use "stable"
+SDK makes to developers, it's difficult for developers even to use "supported"
 APIs with confidence.
 
 So when the Jetpack team met up a few weeks ago one of the things
