@@ -44,17 +44,30 @@ to update their code.
 The stability index is adopted from [node.js](http://nodejs.org/api/documentation.html).
 Each module is assigned one of six values:
 
-
-1. **Deprecated:** *This feature is known to be problematic, and changes are planned. Do not rely on it. Use of the feature may cause warnings. Backwards compatibility should not be expected.*
-2. **Experimental:** *This feature was introduced recently, and may change or be removed in future versions. Please try it out and provide feedback. If it addresses a use-case that is important to you, tell the node core team.*
-3. **Unstable:** *The API is in the process of settling, but has not yet had sufficient real-world testing to be considered stable. Backwards-compatibility will be maintained if reasonable.*
-4. **Stable:** *The API has proven satisfactory, but cleanup in the underlying code may cause minor changes. Backwards-compatibility is guaranteed.*
-5. **API Frozen:** *This API has been tested extensively in production and is unlikely to ever have to change.*
-6. **Locked:** *Unless serious bugs are found, this code will not ever change. Please do not suggest changes in this area; they will be refused.*
+1. Deprecated
+2. Experimental
+3. Unstable
+4. Stable
+5. API Frozen
+6. Locked
 
 The stability index for each module is written into that module's metadata structure:
 * [`page-mod` is `stable`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/page-mod.js#L9)
 * [`addon-page` is `experimental`](https://github.com/mozilla/addon-sdk/blob/master/packages/addon-kit/lib/simple-prefs.js#L7)
+
+For the time being, we'll only use three of these values:
+
+* **Experimental**: this means that the module is not yet stabilized.
+You can try it out and provide feedback, but we may change or remove
+it in future versions without having to pass through a formal deprecation
+process.
+* **Stable**: this means that the module is a fully-supported part of
+the SDK. We will avoid breaking backwards compatibility unless absolutely
+necessary. If we do have to make backwards-incompatible changes, we will
+go through the formal deprecation process.
+* **Deprecated**: we plan to change this module, and backwards compatibility
+should not be expected. Don't start using it, and plan to migrate away from
+this module to its replacement.
 
 In future releases, the SDK will read these values
 and expose them in the docs: in fact, the [SDK will eventually remove the "package"
@@ -62,8 +75,8 @@ structure entirely](https://github.com/mozilla/addon-sdk/wiki/JEP-packageless),
 and then `cfx docs` will organize modules according to their stability rather
 than by package.
 
-We'll periodically review APIs that are marked as "experimental" or "unstable"
-and, if possible, raise bugs to promote them to a more stable state.
+We'll periodically review APIs that are marked as "experimental"
+and, if possible, raise bugs to promote them to "stable".
 
 Right now, we've raised bugs to stabilize some "experimental" APIs in addon-kit:
 * [the `addon-page` module](https://bugzilla.mozilla.org/show_bug.cgi?id=790320)
