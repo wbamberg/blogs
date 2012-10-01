@@ -1,6 +1,6 @@
 # Defining a lifecycle for the Add-on SDK's APIs #
 
-Until now, we've not had a very well-defined lifecycle for APIs in the Add-on SDK.
+Until now we've not had a very well-defined lifecycle for APIs in the Add-on SDK.
 We've said, broadly, that APIs in the [addon-kit package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/addon-kit/index.html)
 are "supported", meaning we won't change them "unless absolutely
 necessary", while APIs in the lower-level [api-utils package](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/packages/api-utils/index.html)
@@ -28,14 +28,14 @@ or [`window/utils`](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/
 * deprecated APIs hang around indefinitely, increasing the
 support burden and making the SDK more confusing to use
 
-So when the Jetpack team met up a few weeks ago one of the things
+When the Jetpack team met up a few weeks ago one of the things
 we talked about was a process for defining and communicating the stability
 of our APIs, and for deprecating and eventually removing obsolete APIs.
 
 The lifecycle we've drafted has two main components:
 
 * a "stability index", that defines how stable each module is
-* a deprecation process that's intended to enable the SDK to remove
+* a deprecation process that is intended to enable the SDK to remove
 or change APIs when necessary, while giving developers enough time
 to update their code.
 
