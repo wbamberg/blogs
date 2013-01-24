@@ -9,13 +9,6 @@ the change. But there are edge cases where you might run into trouble unless
 you update to the new syntax. This post outlines some of these edge cases,
 and highlights the way developers should use `require()` in future.
 
-* what's "require"?
-* how did it work? - complexly!
-* what's changed?
-* backwards compatibility
-* problems
-* how to use require()
-
 ## What's `require()`? ##
 
 With the SDK, you can import objects from other modules using the `require()`
