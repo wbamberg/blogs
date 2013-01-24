@@ -55,18 +55,18 @@ on the "menuitems" package. It would have four packages in the search list:
 
 The SDK will search the following paths:
 
-my-addon/lib/some-module.js
-addon-kit/lib/some-module.js
-api-utils/lib/some-module.js
-menuitems/lib/some-module.js
+    my-addon/lib/some-module.js
+    addon-kit/lib/some-module.js
+    api-utils/lib/some-module.js
+    menuitems/lib/some-module.js
 
 This means that add-ons can import modules from all four packages using only
 the module name as an argument:
 
-`require("my-local-module"); // load from my-addon`
-`require("panel");           // load from addon-kit`
-`require("match-pattern");   // load from api-utils`
-`require("menuitems");       // load from menuitems`
+    require("my-local-module"); // load from my-addon
+    require("panel");           // load from addon-kit
+    require("match-pattern");   // load from api-utils
+    require("menuitems");       // load from menuitems
 
 This seems like a nice feature, but it's tricky, because you can't tell just
 from looking at a `require()` statement which module will be imported. If
