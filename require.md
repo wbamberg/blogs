@@ -1,6 +1,6 @@
 In version 1.12 we changed the structure of the SDK, removing the idea of
 "packages" and relocating all the SDK's modules under the "lib" directory.
-This changed (and greatly simplified) the `require()` syntax used to import
+This changed and greatly simplified the `require()` syntax used to import
 modules.
 
 This change would break backwards compatibility, so we implemented a shim
@@ -13,12 +13,14 @@ and highlights the way developers should use `require()` in future.
 
 With the SDK, you can import objects from other modules using the `require()`
 statement. This is how you use modules supplied by the SDK itself, like
-page-mod and panel, and how you use
+[page-mod](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/modules/sdk/page-mod.html)
+and [panel](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/modules/sdk/panel.html),
+and how you use
 [modules supplied by the wider community](https://github.com/mozilla/addon-sdk/wiki/Community-developed-modules),
 like [`menuitems`](https://github.com/voldsoftware/menuitems-jplib) and
 [`toolbarbuttons`](https://github.com/voldsoftware/toolbarbutton-jplib).
-You can also structure your own code into separate modules, then use
-`require()` to import objects from these local modules.
+You can also [structure your own code into separate modules](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/reusable-modules.html),
+then use `require()` to import objects from these local modules.
 
 The `require()` statement takes a single argument, which tells the SDK where
 to find the module we need. In version 1.12, we changed the way the SDK
@@ -30,7 +32,7 @@ Before version 1.12 of the SDK, the algorithm used to find modules was based
 on the idea of **"packages"**. A package is a collection of modules. Most of
 the modules in the SDK belonged to either the `addon-kit` or the `api-utils`
 packages. An add-on was itself a package, and community-developed modules like
-menuitems were delivered in packages of their own. A package declares
+`menuitems` were delivered in packages of their own. A package declares
 a dependency on another packages, if it wants to use modules from that package.
 
 The algorithm was [pretty complicated](https://addons.mozilla.org/en-US/developers/docs/sdk/1.11/dev-guide/guides/module-search.html#SDK%20Search%20Rules),
@@ -41,14 +43,14 @@ argument to `require()` as a path to a module file, and would search all
 packages in its list for a matching file, starting at the package's "lib"
 directory.
 
-So suppose an add-on called "my-addon" declares an additional dependency,
-on the "menuitems" package. It would have four packages in the search list:
+So if an add-on called "my-addon" declares one additional dependency,
+on the "menuitems" package, it would have four packages in its search list:
 `["my-addon", "addon-kit", "api-utils", "menuitems"]`. If a module in
 "my-addon" contains a require statement like:
 
 `require("some-module")`
 
-The SDK will search the following paths:
+The SDK will search the following paths in order:
 
     my-addon/lib/some-module.js
     addon-kit/lib/some-module.js
@@ -78,8 +80,8 @@ was implemented:
 starting from, but not including, the "lib" directory:
 
 <!--end bullet-->
-    require("panel");
-    require("page-mod/match-pattern");
+    require("sdk/panel");
+    require("sdk/page-mod/match-pattern");
 
 * to import objects from modules in your add-on, specify a path relative
 to the importing module:
@@ -110,10 +112,9 @@ meantime there are two alternative approaches:
 
 * you can still use third-party packages, copying them into the "packages"
 directory under the SDK root and declaring your dependency on them, as the
-[SDK tutorial outlines](https://addons.mozilla.org/en-US/developers/docs/sdk/1.12/dev-guide/tutorials/adding-menus.html).
+[SDK tutorial outlines](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/adding-menus.html).
 
 * you can copy the modules you need to use (and any additional modules
 that these modules `require()`) into your add-on. But if you do this
 you may need to rewrite any `require()` statements in these modules
 to be in line with the new form.
-
