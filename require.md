@@ -72,7 +72,7 @@ This seems like a nice feature, but it's tricky, because you can't tell just
 from looking at a `require()` statement which module will be imported. If
 module names clash, unexpected modules might be imported.
 
-## What's changed? ##
+## How does `require()` work now? ##
 
 In version 1.12 of the SDK we removed the concept of "packages". All SDK
 modules were relocated under a new "lib" directory directly under the SDK
@@ -91,15 +91,21 @@ to the importing module:
     `require("./my-module");`
     `require("./subdirectory/another-module");`
 
-## Backwards compatibility ##
-
 Obviously, this change would break every SDK add-on in existence. To
 prevent this we added a file, "mapping.json", which maps old-style
-`require()` statements to their new counterparts:
+`require()` statements to their new counterparts. For example:
 
     "panel": "sdk/panel"
 
-With this in place, most users of the SDK should be unaffected by the change.
+With this in place, most users of the SDK are unaffected by the change.
+
+Although "mapping.json" means existing add-ons will still work without
+needing an update, it's important to update your code to the new style when
+you can, and to use the new style in future. For one thing, any new modules
+we add, like IndexedDB, won't be added to "mappings.json", so you'll have
+to use the new style.
+
+## Community-developed modules ##
 
 
 
