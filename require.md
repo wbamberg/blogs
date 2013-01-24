@@ -19,11 +19,13 @@ and highlights the way developers should use `require()` in future.
 ## What's `require()`? ##
 
 With the SDK, you can import objects from other modules using the `require()`
-statement. This is how you use objects supplied by the SDK itself, like
-page-mod and panel, and how you use objects supplied by the wider community,
-like menuitems and toolbarbuttons. You can also structure your own code into
-separate modules, then use `require()` to import objects from these local
-modules.
+statement. This is how you use modules supplied by the SDK itself, like
+page-mod and panel, and how you use
+[modules supplied by the wider community](https://github.com/mozilla/addon-sdk/wiki/Community-developed-modules),
+like [`menuitems`](https://github.com/voldsoftware/menuitems-jplib) and
+[`toolbarbuttons`](https://github.com/voldsoftware/toolbarbutton-jplib).
+You can also structure your own code into separate modules, then use
+`require()` to import objects from these local modules.
 
 The `require()` statement takes a single argument, which tells the SDK where
 to find the module we need. In version 1.12, we changed the way the SDK
@@ -82,14 +84,16 @@ was implemented:
 * to import objects from SDK modules, specify the full path to the module
 starting from, but not including, the "lib" directory:
 
-    `require("panel");
-    `require("page-mod/match-pattern");
+<!--end bullet-->
+    require("panel");
+    require("page-mod/match-pattern");
 
 * to import objects from modules in your add-on, specify a path relative
 to the importing module:
 
-    `require("./my-module");`
-    `require("./subdirectory/another-module");`
+<!--end bullet-->
+    require("./my-module");
+    require("./subdirectory/another-module");
 
 Obviously, this change would break every SDK add-on in existence. To
 prevent this we added a file, "mapping.json", which maps old-style
@@ -103,9 +107,20 @@ Although "mapping.json" means existing add-ons will still work without
 needing an update, it's important to update your code to the new style when
 you can, and to use the new style in future. For one thing, any new modules
 we add, like IndexedDB, won't be added to "mappings.json", so you'll have
-to use the new style.
+to use the new style if you want to use these modules.
 
 ## Community-developed modules ##
 
+Eventually, you'll be able to import objects from modules outside the SDK
+by passing a URL to `require()`, but we don't support that, yet. In the
+meantime there are two alternative approaches:
 
+* you can still use third-party packages, copying them into the "packages"
+directory under the SDK root and declaring your dependency on them, as the
+[SDK tutorial outlines](https://addons.mozilla.org/en-US/developers/docs/sdk/1.12/dev-guide/tutorials/adding-menus.html).
+
+* you can copy the modules you need to use (and any additional modules
+that these modules `require()`) into your add-on. But if you do this
+you may need to rewrite any `require()` statements in these modules
+to be in line with the new form.
 
