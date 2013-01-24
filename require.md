@@ -5,13 +5,12 @@ modules.
 
 This change would break backwards compatibility, so we implemented a shim
 to ensure that most common usages of `require()` would be unaffected by
-the change. But there are edge cases where you might run into trouble unless
-you update to the new syntax. This post outlines some of these edge cases,
-and highlights the way developers should use `require()` in future.
+the change. Even so, it's important to update to the new form when you can,
+and to use the new form for new code.
 
 ## What's `require()`? ##
 
-With the SDK, you can import objects from other modules using the `require()`
+With the SDK, you import objects from other modules using the `require()`
 statement. This is how you use modules supplied by the SDK itself, like
 [page-mod](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/modules/sdk/page-mod.html)
 and [panel](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/modules/sdk/panel.html),
@@ -23,7 +22,7 @@ You can also [structure your own code into separate modules](https://addons.mozi
 then use `require()` to import objects from these local modules.
 
 The `require()` statement takes a single argument, which tells the SDK where
-to find the module we need. In version 1.12, we changed the way the SDK
+to find the module you need. In version 1.12, we changed the way the SDK
 interprets this argument.
 
 ## How did `require()` work before? ##
@@ -115,6 +114,7 @@ directory under the SDK root and declaring your dependency on them, as the
 [SDK tutorial outlines](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/adding-menus.html).
 
 * you can copy the modules you need to use (and any additional modules
-that these modules `require()`) into your add-on. But if you do this
-you may need to rewrite any `require()` statements in these modules
+that these modules `require()`) into your add-on, and treat them as local
+modules, using relative paths in `require()`. But if you do this
+you may need to rewrite any `require()` statements inside these modules
 to be in line with the new form.
