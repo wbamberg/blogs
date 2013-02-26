@@ -1,32 +1,28 @@
 In version 1.12 we changed the structure of the SDK, removing the idea of
 "packages" and relocating all the SDK's modules under the "lib" directory.
-This changed (and greatly simplified) the `require()` syntax used to import
+This changed and greatly simplified the `require()` syntax used to import
 modules.
 
 This change would break backwards compatibility, so we implemented a shim
 to ensure that most common usages of `require()` would be unaffected by
-the change. But there are edge cases where you might run into trouble unless
-you update to the new syntax. This post outlines some of these edge cases,
-and highlights the way developers should use `require()` in future.
-
-* what's "require"?
-* how did it work? - complexly!
-* what's changed?
-* backwards compatibility
-* problems
-* how to use require()
+the change. Even so, it's important to update to the new form when you can,
+and to use the new form for new code.
 
 ## What's `require()`? ##
 
-With the SDK, you can import objects from other modules using the `require()`
-statement. This is how you use objects supplied by the SDK itself, like
-page-mod and panel, and how you use objects supplied by the wider community,
-like menuitems and toolbarbuttons. You can also structure your own code into
-separate modules, then use `require()` to import objects from these local
-modules.
+With the SDK, you import objects from other modules using the `require()`
+statement. This is how you use modules supplied by the SDK itself, like
+[page-mod](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/modules/sdk/page-mod.html)
+and [panel](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/modules/sdk/panel.html),
+and how you use
+[modules supplied by the wider community](https://github.com/mozilla/addon-sdk/wiki/Community-developed-modules),
+like [`menuitems`](https://github.com/voldsoftware/menuitems-jplib) and
+[`toolbarbuttons`](https://github.com/voldsoftware/toolbarbutton-jplib).
+You can also [structure your own code into separate modules](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/reusable-modules.html),
+then use `require()` to import objects from these local modules.
 
 The `require()` statement takes a single argument, which tells the SDK where
-to find the module we need. In version 1.12, we changed the way the SDK
+to find the module you need. In version 1.12, we changed the way the SDK
 interprets this argument.
 
 ## How did `require()` work before? ##
@@ -35,7 +31,7 @@ Before version 1.12 of the SDK, the algorithm used to find modules was based
 on the idea of **"packages"**. A package is a collection of modules. Most of
 the modules in the SDK belonged to either the `addon-kit` or the `api-utils`
 packages. An add-on was itself a package, and community-developed modules like
-menuitems were delivered in packages of their own. A package declares
+`menuitems` were delivered in packages of their own. A package declares
 a dependency on another packages, if it wants to use modules from that package.
 
 The algorithm was [pretty complicated](https://addons.mozilla.org/en-US/developers/docs/sdk/1.11/dev-guide/guides/module-search.html#SDK%20Search%20Rules),
@@ -46,14 +42,14 @@ argument to `require()` as a path to a module file, and would search all
 packages in its list for a matching file, starting at the package's "lib"
 directory.
 
-So suppose an add-on called "my-addon" declares an additional dependency,
-on the "menuitems" package. It would have four packages in the search list:
+So if an add-on called "my-addon" declares one additional dependency,
+on the "menuitems" package, it would have four packages in its search list:
 `["my-addon", "addon-kit", "api-utils", "menuitems"]`. If a module in
 "my-addon" contains a require statement like:
 
 `require("some-module")`
 
-The SDK will search the following paths:
+The SDK will search the following paths in order:
 
     my-addon/lib/some-module.js
     addon-kit/lib/some-module.js
@@ -82,14 +78,16 @@ was implemented:
 * to import objects from SDK modules, specify the full path to the module
 starting from, but not including, the "lib" directory:
 
-    `require("panel");
-    `require("page-mod/match-pattern");
+<!--end bullet-->
+    require("sdk/panel");
+    require("sdk/page-mod/match-pattern");
 
 * to import objects from modules in your add-on, specify a path relative
 to the importing module:
 
-    `require("./my-module");`
-    `require("./subdirectory/another-module");`
+<!--end bullet-->
+    require("./my-module");
+    require("./subdirectory/another-module");
 
 Obviously, this change would break every SDK add-on in existence. To
 prevent this we added a file, "mapping.json", which maps old-style
@@ -103,9 +101,20 @@ Although "mapping.json" means existing add-ons will still work without
 needing an update, it's important to update your code to the new style when
 you can, and to use the new style in future. For one thing, any new modules
 we add, like IndexedDB, won't be added to "mappings.json", so you'll have
-to use the new style.
+to use the new style if you want to use these modules.
 
 ## Community-developed modules ##
 
+Eventually, you'll be able to import objects from modules outside the SDK
+by passing a URL to `require()`, but we don't support that, yet. In the
+meantime there are two alternative approaches:
 
+* you can still use third-party packages, copying them into the "packages"
+directory under the SDK root and declaring your dependency on them, as the
+[SDK tutorial outlines](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/adding-menus.html).
 
+* you can copy the modules you need to use (and any additional modules
+that these modules `require()`) into your add-on, and treat them as local
+modules, using relative paths in `require()`. But if you do this
+you may need to rewrite any `require()` statements inside these modules
+to be in line with the new form.
