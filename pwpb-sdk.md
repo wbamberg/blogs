@@ -4,7 +4,7 @@ explains what the change is, how the SDK is handling it, and what add-on
 developers will need to do as a result. In summary:
 
 * if your add-on uses the `private-browsing` API, you must **repack it**
-when SDK 1.14 is released on March 12, if you want your add-on to work
+when SDK 1.14 is released on March 26th if you want your add-on to work
 properly on Firefox 20.
 * whether or not your add-on uses the `private-browsing` API, you must
 **update it** if you want your add-on to be able to see private windows on
@@ -12,7 +12,7 @@ Firefox 20.
 
 ## What's per-window private browsing? ##
 
-Before Firefox 20, private browsing is a global property of the entire browser.
+Up to and including Firefox 19, private browsing has been a global property for the entire browser.
 When the user enters private browsing, the existing browsing session is
 suspended and a new blank window opens. This window is private, as are any
 other windows opened until the user chooses to exit private browsing, at which
@@ -21,7 +21,7 @@ non-private session.
 
 Firefox 20 introduces **per-window private browsing**. This means that private
 browsing status is a property of an individual window. The user enters private
-browsing by opening a new, private, window. When they do this, any existing
+browsing by opening a new private window. When they do this, any existing
 non-private windows are kept open, so the user will typically have both
 private and non-private windows open at the same time.
 
