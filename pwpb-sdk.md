@@ -34,9 +34,6 @@ offering an `isActive` property to check whether the browser is in private
 browsing mode, alongside `start` and `stop` events to be notified when
 private browsing starts and stops.
 
-All add-ons get to see private browsing sessions, so checking that add-ons
-respect private browsing is a task for reviewers.
-
 Here's an add-on that stores the titles of tabs the user loads, unless the
 browser is in private browsing mode:
 
