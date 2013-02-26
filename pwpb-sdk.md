@@ -142,7 +142,7 @@ it will get results for `isActive`, `start`, and `stop` that track  global
 private browsing, and you will be able to use them to avoid  storing user
 private data.
 * on Firefox 20 any of the old private-browsing functions
-*(`isActive`, `start`, and `stop`) will log deprecation warnings. Your
+(`isActive`, `start`, and `stop`) will log deprecation warnings. Your
 add-on won't see any private windows or objects, such as tabs, that are
 associated  with them (it will behave as if these windows just don't exist).
 `isActive` will always be false, and `start`, and `stop` will never fire.
