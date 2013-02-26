@@ -133,7 +133,7 @@ private browsing, and you will be able to use them to avoid storing user
 private data.
 * on Firefox 20 your add-on might not work at all. If it
 does, it will see private windows, but the old private-browsing API will
-not ever notify you about them, so you will leak user private data.
+not ever tell you that they are private, so you will leak user private data.
 
 ### If you repack with SDK 1.14 ###
 If you just repack your add-on but leave the code the same:
