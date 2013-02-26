@@ -3,7 +3,7 @@ will have an effect on add-ons developed using the SDK. This blog post
 explains what the change is, how the SDK is handling it, and what add-on
 developers will need to do as a result. In summary:
 
-* if your add-on uses the `private-browsing` API, then you must **repack it**
+* if your add-on uses the `private-browsing` API, you must **repack it**
 when SDK 1.14 is released on March 12, if you want your add-on to work
 properly on Firefox 20.
 * whether or not your add-on uses the `private-browsing` API, you must
