@@ -127,21 +127,21 @@ If you have an add-on built with an earlier version of the SDK,  this
 section summarises your options when SDK 1.14 comes out.
 
 ### If you do nothing ###
-*  your add-on will continue to work fine when running on Firefox 19: it
+* on Firefox 19 your add-on will continue to work fine: it
 will get results for `isActive`, `start`, and `stop` that track global
 private browsing, and you will be able to use them to avoid storing user
 private data.
-* your add-on might not work at all. If it does, it will see private windows,
-but the old private-browsing API will not ever notify you about them, so you
-will leak user private data.
+* on Firefox 20 your add-on might not work at all. If it
+does, it will see private windows, but the old private-browsing API will
+not ever notify you about them, so you will leak user private data.
 
 ### If you repack with SDK 1.14 ###
 If you just repack your add-on but leave the code the same:
-* your add-on will continue to work as before when running on Firefox 19:
+* on Firefox 19 your add-on will continue to work as before:
 it will get results for `isActive`, `start`, and `stop` that track  global
 private browsing, and you will be able to use them to avoid  storing user
 private data.
-* when running on Firefox 20, any of the old private-browsing functions
+* on Firefox 20 any of the old private-browsing functions
 *(`isActive`, `start`, and `stop`) will log deprecation warnings. Your
 add-on won't see any private windows or objects, such as tabs, that are
 associated  with them (it will behave as if these windows just don't exist).
@@ -150,9 +150,9 @@ associated  with them (it will behave as if these windows just don't exist).
 ### If you update your add-on ###
 If you update your add-on, by setting the "private-browsing" flag, and
 updating your code to use the new `isPrivate()` API:
-* your add-on will work when running on Firefox 19: `isPrivate` will map
+* on Firefox 19 your add-on will work fine: `isPrivate` will map
 on to global private browsing by returning `true` if and only if the user
 is in  global private browsing mode.
-* when running on Firefox 20, you'll  see private windows, and `isPrivate`
+* on Firefox 20 you'll see private windows, and `isPrivate`
 will tell you whether it's OK to  store user data associated with windows,
 tabs, and workers.
