@@ -64,6 +64,8 @@ updates the API to support per-window private browsing, and makes
 another important change: by default, SDK 1.14-based add-ons won't see
 any private windows.
 
+### Repacking your add-on ###
+
 This means that add-ons developers don't need to update
 their code in order to respect per-window private browsing: all they
 need to do is repack their add-ons using SDK 1.14. The old API will
@@ -76,8 +78,11 @@ will never be triggered.
 or objects such as tabs that are associated with private windows
 * page-mods will not be matched for private windows
 
-You must repack your add-on with 1.14 though! If you don't, it may not
-function correctly, and will leak user private data. 
+You must repack your add-on though! If you don't, it may not
+function correctly, and will leak user private data, because private
+windows will not be hidden.
+
+### Updating your code ###
 
 If you want to see private windows, you'll need to set the
 following key in your ["package.json"](dev-guide/package-spec.html)
