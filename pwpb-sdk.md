@@ -150,9 +150,9 @@ associated  with them (it will behave as if these windows just don't exist).
 ### If you update your add-on ###
 If you update your add-on, by setting the "private-browsing" flag, and
 updating your code to use the new `isPrivate()` API:
-* on Firefox 19 your add-on will work fine: `isPrivate` will map
+* on Firefox 19 your add-on will work fine: `isPrivate()` will map
 on to global private browsing by returning `true` if and only if the user
 is in  global private browsing mode.
-* on Firefox 20 you'll see private windows, and `isPrivate`
+* on Firefox 20 you'll see private windows, and `isPrivate()`
 will tell you whether it's OK to  store user data associated with windows,
 tabs, and workers.
