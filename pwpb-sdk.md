@@ -76,7 +76,7 @@ You must repack your add-on though! If you don't, it may not
 function correctly, and will leak user private data, because private
 windows will not be hidden.
 
-## Updating your code ##
+### Updating your code ###
 
 If you want to see private windows, you'll need to set the
 following key in your ["package.json"](dev-guide/package-spec.html)
