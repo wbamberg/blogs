@@ -1,7 +1,7 @@
 Firefox 20 introduces major changes to the "private browsing" feature, which
 will have an effect on add-ons developed using the SDK. This blog post
 explains what the change is, how the SDK is handling it, and what add-on
-developers will needs to do as a result. In summary:
+developers will need to do as a result. In summary:
 
 * if your add-on uses the `private-browsing` API, then you must *repack it*
 when SDK 1.14 is released on March 12, if you want your add-on to work
@@ -10,7 +10,7 @@ properly on Firefox 20.
 *update it* if you want your add-on to be able to see private windows on
 Firefox 20.
 
-# What's per-window private browsing? #
+## What's per-window private browsing? ##
 
 Before Firefox 20, private browsing is a global property of the entire browser.
 When the user enters private browsing, the existing browsing session is
@@ -25,9 +25,7 @@ browsing by opening a new, private, window. When they do this, any existing
 non-private windows are kept open, so the user will typically have both
 private and non-private windows open at the same time.
 
-# How does the SDK handle this change? #
-
-## Handling global private-browsing with the SDK ##
+## How does the SDK handle this change? ##
 
 Under the old, global, private browsing model, add-ons can handle private
 browsing as a simple binary condition: while private browsing is active,
@@ -57,8 +55,6 @@ browser is in private browsing mode:
       }
     });
 
-## Handling per-window private browsing with the SDK ##
-
 The first SDK release to target Firefox 20 is SDK 1.14. This release
 updates the API to support per-window private browsing, and makes
 another important change: by default, SDK 1.14-based add-ons won't see
@@ -66,10 +62,8 @@ any private windows.
 
 ### Repacking your add-on ###
 
-This means that add-ons developers don't need to update
-their code in order to respect per-window private browsing: all they
-need to do is repack their add-ons using SDK 1.14. The old API will
-log deprecation warnings, but will behave as if the user never enters
+Hiding private windows by default means that add-ons developers
+don't need to update their code in order to respect per-window private browsing: all they need to do is repack their add-ons using SDK 1.14. The old API will log deprecation warnings, but will behave as if the user never enters
 private browsing: 
 
 * `isActive` will always be `false`, and `start` and `stop`
@@ -82,7 +76,7 @@ You must repack your add-on though! If you don't, it may not
 function correctly, and will leak user private data, because private
 windows will not be hidden.
 
-### Updating your code ###
+## Updating your code ##
 
 If you want to see private windows, you'll need to set the
 following key in your ["package.json"](dev-guide/package-spec.html)
@@ -98,7 +92,8 @@ you'll need to use the new API to respect private browsing.
 SDK 1.14 replaces the existing API with a new function `isPrivate()`
 that takes an object - a window, tab, or worker - as a parameter,
 and returns `true` iff the object is a private window or is associated
-with a private window:
+with a private window. So to update the add-on above, we could do
+something like this:
 
     var simpleStorage = require("simple-storage");
 
@@ -116,4 +111,48 @@ with a private window:
       }
     });
 
+### Working with Firefox 19 ###
 
+SDK 1.14 bridges the gap between the old global private browsing,
+in Firefox 19, and the new per-window private browsing, in Firefox 20.
+
+Since SDK 1.14 needs to support both versions, the new private-browsing
+API is designed to work with global private browsing. When running on
+Firefox 19, `isPrivate()` will return `true` if and only if the user has
+global private browsing enabled.
+
+## Summary ##
+
+If you have an add-on built with an earlier version of the SDK,  this
+section summarises your options when SDK 1.14 comes out.
+
+### If you do nothing ###
+*  your add-on will continue to work fine when running on Firefox 19: it
+will get results for `isActive`, `start`, and `stop` that track global
+private browsing, and you will be able to use them to avoid storing user
+private data.
+* your add-on might not work at all. If it does, it will see private windows,
+but the old private-browsing API will not ever notify you about them, so you
+will leak user private data.
+
+### If you repack with SDK 1.14 ###
+If you just repack your add-on but leave the code the same:
+* your add-on will continue to work as before when running on Firefox 19:
+it will get results for `isActive`, `start`, and `stop` that track  global
+private browsing, and you will be able to use them to avoid  storing user
+private data.
+* when running on Firefox 20, any of the old private-browsing functions
+*(`isActive`, `start`, and `stop`) will log deprecation warnings. Your
+add-on won't see any private windows or objects, such as tabs, that are
+associated  with them (it will behave as if these windows just don't exist).
+`isActive` will always be false, and `start`, and `stop` will never fire.
+
+### If you update your add-on ###
+If you update your add-on, by setting the "private-browsing" flag, and
+updating your code to use the new `isPrivate()` API:
+* your add-on will work when running on Firefox 19: `isPrivate` will map
+on to global private browsing by returning `true` if and only if the user
+is in  global private browsing mode.
+* when running on Firefox 20, you'll  see private windows, and `isPrivate`
+will tell you whether it's OK to  store user data associated with windows,
+tabs, and workers.
