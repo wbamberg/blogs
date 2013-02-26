@@ -1,11 +1,11 @@
-The changes Firefox 20 introduces to private browsing will have an effect on
-add-ons developed using the SDK. This blog post explains what the change is,
-how the SDK is handling it, and what add-on developers will needs to do as a
-result. In summary:
+Firefox 20 introduces major changes to the "private browsing" feature, which
+will have an effect on add-ons developed using the SDK. This blog post
+explains what the change is, how the SDK is handling it, and what add-on
+developers will needs to do as a result. In summary:
 
 * if your add-on uses the `private-browsing` API, then you must *repack it*
-when SDK 1.14 is released on (date), if you want your add-on to work on
-Firefox 20.
+when SDK 1.14 is released on March 12, if you want your add-on to work
+properly on Firefox 20.
 * whether or not your add-on uses the `private-browsing` API, you must
 *update it* if you want your add-on to be able to see private windows on
 Firefox 20.
@@ -58,8 +58,6 @@ browser is in private browsing mode:
     });
 
 ## Handling per-window private browsing with the SDK ##
-
-### Repack your add-on ###
 
 The first SDK release to target Firefox 20 is SDK 1.14. This release
 updates the API to support per-window private browsing, and makes
