@@ -1,5 +1,5 @@
 Firefox 20 introduces major changes to the "private browsing" feature, which
-will have an effect on add-ons developed using the SDK. This blog post
+will affect add-ons developed using the SDK. This blog post
 explains what the change is, how the SDK is handling it, and what add-on
 developers will need to do as a result. In summary:
 
