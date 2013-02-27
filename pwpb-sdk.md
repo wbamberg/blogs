@@ -88,7 +88,7 @@ you'll need to use the new API to respect private browsing.
 
 SDK 1.14 replaces the existing API with a new function `isPrivate()`
 that takes an object - a window, tab, or worker - as a parameter,
-and returns `true` iff the object is a private window or is associated
+and returns `true` if the object is a private window or is associated
 with a private window. So to update the add-on above, we could do
 something like this:
 
