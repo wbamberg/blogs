@@ -18,7 +18,7 @@ The lifecycle we've drafted has two main components:
 * a deprecation process that is intended to enable the SDK to remove or change APIs when necessary, while giving developers enough time to update their code.
 
 ## Stability Index ##
-
+a change
 The stability index is adopted from [node.js](http://nodejs.org/api/documentation.html). Each module is assigned one of six values:
 
 1. Deprecated
